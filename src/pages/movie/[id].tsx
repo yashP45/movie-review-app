@@ -89,6 +89,7 @@ const MovieReviews = () => {
             isVisible={showModal}
             onClose={() => setShowModal(false)}
             reviewData={currentReview}
+            onReview={fetchMovieAndReviews}
           />
         )}
       </div>

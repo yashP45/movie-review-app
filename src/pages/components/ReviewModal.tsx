@@ -5,7 +5,7 @@ interface RatingModalProps {
   isVisible: boolean;
   onClose: () => void;
   reviewData?: { reviewer: string; rating: string; comments: string ; movieId: number; id: number }; 
-  onReview: (id: any) => void
+  onReview?: (id: any) => void
 }
 
 const RatingModal: React.FC<RatingModalProps> = ({ isVisible, onClose , reviewData , onReview }) => {
@@ -15,8 +15,8 @@ const RatingModal: React.FC<RatingModalProps> = ({ isVisible, onClose , reviewDa
     const router = useRouter();
   const { id } = router.query;
 
-  const [selectedMovieId, setSelectedMovieId] = useState<number | undefined>(reviewData?.movieId );
-  const [movies, setMovies] = useState<{ id: string; name: string }[]>([]);
+  const [selectedMovieId, setSelectedMovieId] = useState<number | undefined>(reviewData?.movieId || Number(id) );
+  const [movies, setMovies] = useState<{ id: number; name: string }[]>([]);
   useEffect(() => {
     const fetchMovies = async () => {
       const response = await fetch('/api/movie'); 
@@ -41,7 +41,7 @@ const RatingModal: React.FC<RatingModalProps> = ({ isVisible, onClose , reviewDa
     });
 
     if (response.ok) {
-     onReview(id)
+      onReview?.(reviewData ? reviewData.movieId : selectedMovieId);
       onClose(); 
     
     } else {

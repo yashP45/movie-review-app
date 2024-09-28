@@ -21,6 +21,7 @@ const Navbar: React.FC<NavProps> = ({onSuccess ,onReview}) => {
               MOVIECRITIC
             </span>
           </a>
+          <div className="flex gap-5">
           <button
             type="button"
             className="text-white bg-transparent border border-white hover:bg-blue-800 focus:ring-4 ring-blue-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:hover:bg-blue-700 focus:outline-none"
@@ -35,6 +36,7 @@ const Navbar: React.FC<NavProps> = ({onSuccess ,onReview}) => {
           >
             Add New Movie
           </button>
+          </div>
         </div>
       </nav>
 
@@ -46,7 +48,7 @@ const Navbar: React.FC<NavProps> = ({onSuccess ,onReview}) => {
       <RatingModal
         isVisible={showRatingModal}
         onClose={() => setShowRatingModal(false)}
-       onReview={onReview}
+        onReview={onReview}
       />
     </div>
   );

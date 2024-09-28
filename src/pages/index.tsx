@@ -7,6 +7,7 @@ const MovieList = () => {
   const [movies, setMovies] = useState<any>([]);
   const [isModalVisible, setModalVisible] = useState(false); 
   const [selectedMovie, setSelectedMovie] = useState<any>(null); 
+  const [searchTerm, setSearchTerm] = useState<string>(''); 
   const router = useRouter();
   const fetchMovies = async () => {
     const response = await fetch('/api/movie');
@@ -41,6 +42,10 @@ const MovieList = () => {
     setSelectedMovie(null); 
   };
 
+  const filteredMovies = movies.filter((movie: any) => 
+    movie.name.toLowerCase().includes(searchTerm.toLowerCase()) 
+  );
+
   return (
     <> <Navbar 
     onSuccess={fetchMovies} // Pass the fetchMovies function
@@ -55,10 +60,12 @@ const MovieList = () => {
           type="text"
           placeholder="Search for your favourite movie"
           className="w-full p-3 mb-6 border border-gray-300 rounded-md"
+          value={searchTerm} 
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {movies.map((movie : any) => (
+          {filteredMovies.map((movie : any) => (
             <div
               key={movie.id}
               className="p-4 bg-purple-100 rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer"
