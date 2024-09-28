@@ -20,11 +20,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         comments: comments || undefined,
       },
     });
-    await updateMovieRating(updatedReview.movieId); // Function to update movie rating (defined below)
+    await updateMovieRating(updatedReview.movieId); 
     res.status(200).json(updatedReview);
   } else if (req.method === 'DELETE') {
     const deletedReview = await prisma.review.delete({ where: { id: Number(id) } });
-    await updateMovieRating(deletedReview.movieId); // Function to update movie rating (defined below)
+    await updateMovieRating(deletedReview.movieId); 
     res.status(204).end();
   } else {
     res.setHeader('Allow', ['GET', 'PUT', 'DELETE']);
@@ -32,7 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 }
 
-// Helper function to update movie's average rating
+
 async function updateMovieRating(movieId: number) {
   const reviews = await prisma.review.findMany({ where: { movieId } });
   const averageRating = reviews.length ? reviews.reduce((acc: any, review: any) => acc + review.rating, 0) / reviews.length : null;

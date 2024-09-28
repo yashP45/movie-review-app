@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { prisma } from '../../../server/prisma'; // Adjust the path as necessary
+import { prisma } from '../../../server/prisma'; 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
@@ -16,7 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         comments,
       },
     });
-    await updateMovieRating(movieId); // Function to update movie rating (defined below)
+    await updateMovieRating(movieId); 
     res.status(201).json(review);
   } else {
     res.setHeader('Allow', ['GET', 'POST']);
