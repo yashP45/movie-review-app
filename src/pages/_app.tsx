@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/pages/components/navbar";
 import { useEffect, useState } from "react";
+import toast, { Toaster } from 'react-hot-toast';
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -33,6 +34,8 @@ function MyApp({ Component, pageProps }: AppProps) {
       >
  
         <Component {...pageProps} />
+        <Toaster />
+
       </body>
     </html>
   );

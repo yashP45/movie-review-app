@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import './globals.css'
 import Modal from './components/Modal'; 
 import Navbar from './components/navbar';
+import { toast } from 'react-hot-toast';
 const MovieList = () => {
   const [movies, setMovies] = useState<any>([]);
   const [isModalVisible, setModalVisible] = useState(false); 
@@ -14,6 +15,9 @@ const MovieList = () => {
     setLoading(true);
     const response = await fetch('/api/movie');
     const data = await response.json();
+    if(response.ok) {
+      toast.success('Movie fetched successfully!'); 
+    }
     setMovies(data);
     setLoading(false); 
   };
@@ -31,8 +35,10 @@ const MovieList = () => {
   
     if (response.ok) {
       setMovies(movies.filter((movie: any) => movie.id !== id)); 
+      toast.success('Movie deleted successfully!'); 
     } else {
       console.error('Failed to delete movie');
+      toast.error('Error Deleting Movie!'); 
     }
   };
   const openModal = (movie: any) => {

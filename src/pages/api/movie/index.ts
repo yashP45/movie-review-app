@@ -15,7 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
     res.status(201).json(movie);
   } else {
-    res.setHeader('Allow', ['GET', 'POST']);
+    res.setHeader('Allow', ['GET', 'POST' , 'PUT']);
     res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }

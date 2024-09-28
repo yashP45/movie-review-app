@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import RatingModal from "../components/ReviewModal";
 import Navbar from "../components/navbar";
-
+import { toast } from 'react-hot-toast';
 const MovieReviews = () => {
   const router = useRouter();
   const { id } = router.query;
@@ -36,6 +36,9 @@ const MovieReviews = () => {
 
     if (response.ok) {
       setReviews(reviews.filter((review: any) => review.id !== reviewId));
+      toast.success('Review Deleted successfully!'); 
+    } else {
+      toast.error('Failed'); 
     }
   };
 

@@ -1,6 +1,8 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
 
 import { useRouter } from "next/router";
+import toast from 'react-hot-toast'; 
+
 interface RatingModalProps {
   isVisible: boolean;
   onClose: () => void;
@@ -46,9 +48,11 @@ const RatingModal: React.FC<RatingModalProps> = ({ isVisible, onClose , reviewDa
     setIsLoading(false); 
 
     if (response.ok) {
+      toast.success('Rating submitted successfully!'); 
       onReview?.(reviewData ? reviewData.movieId : selectedMovieId);
       onClose(); 
     } else {
+      toast.error('Failed to add rating'); 
       console.error('Failed to add rating');
     }
   };

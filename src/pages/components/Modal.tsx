@@ -1,5 +1,7 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import { useRouter } from 'next/router';
+import { toast } from 'react-hot-toast'; 
+
 
 interface ModalProps {
   isVisible: boolean;
@@ -34,9 +36,11 @@ const Modal: React.FC<ModalProps> = ({ isVisible, onClose, movie , onSuccess  })
     setLoading(false); 
     if (response.ok) {
       onClose();
-      onSuccess?.()
+      onSuccess?.();
+      toast.success('Movie saved successfully!'); 
     } else {
       console.error('Failed to add/edit movie'); 
+      toast.error('Failed to add/edit movie');
     }
   };
 
