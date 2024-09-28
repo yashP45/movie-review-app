@@ -11,6 +11,7 @@ interface ModalProps {
 const Modal: React.FC<ModalProps> = ({ isVisible, onClose, movie , onSuccess  }) => {
   const [name, setName] = useState(movie?.name || ''); 
   const [releaseDate, setReleaseDate] = useState(movie?.releaseDate || ''); 
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (movie) {
@@ -21,6 +22,7 @@ const Modal: React.FC<ModalProps> = ({ isVisible, onClose, movie , onSuccess  })
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true); 
     const response = await fetch(movie ? `/api/movie/${movie.id}` : '/api/movie/add', { 
       method: movie ? 'PUT' : 'POST', 
       headers: {
@@ -29,6 +31,7 @@ const Modal: React.FC<ModalProps> = ({ isVisible, onClose, movie , onSuccess  })
       body: JSON.stringify({ name, releaseDate }),
     });
 
+    setLoading(false); 
     if (response.ok) {
       onClose();
       onSuccess?.()
@@ -36,6 +39,7 @@ const Modal: React.FC<ModalProps> = ({ isVisible, onClose, movie , onSuccess  })
       console.error('Failed to add/edit movie'); 
     }
   };
+
   if (!isVisible) return null;
 
   return (
@@ -80,9 +84,10 @@ const Modal: React.FC<ModalProps> = ({ isVisible, onClose, movie , onSuccess  })
             </button>
             <button
               type="submit"
-              className="text-white bg-blue-600 px-4 py-2 rounded-lg hover:bg-blue-700"
+              className={`text-white bg-blue-600 px-4 py-2 rounded-lg hover:bg-blue-700 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`} // {{ edit_4 }}
+              disabled={loading} 
             >
-              Submit
+              {loading ? 'Loading...' : 'Submit'} 
             </button>
           </div>
         </form>

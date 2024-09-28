@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
-import RatingModal from "./ReviewModal"; // Import the new modal
+import RatingModal from "./ReviewModal"; 
 
 interface NavProps {
     onSuccess? : () => void;

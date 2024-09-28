@@ -20,14 +20,14 @@ export default async function handler(
       where: { id: Number(id) },
     });
     res.status(204).end();
-  } else if (req.method === "PUT") {
+  } else if (req.method === 'PUT') {
     const updatedMovie = await prisma.movie.update({
       where: { id: Number(id) },
       data: req.body,
     });
     res.status(200).json(updatedMovie);
   } else {
-    res.setHeader("Allow", ["GET", "DELETE", "PUT"]);
+    res.setHeader('Allow', ['GET', 'PUT', 'DELETE']);
     res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }

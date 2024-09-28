@@ -17,6 +17,8 @@ const RatingModal: React.FC<RatingModalProps> = ({ isVisible, onClose , reviewDa
 
   const [selectedMovieId, setSelectedMovieId] = useState<number | undefined>(reviewData?.movieId || Number(id) );
   const [movies, setMovies] = useState<{ id: number; name: string }[]>([]);
+  const [isLoading, setIsLoading] = useState(false); 
+
   useEffect(() => {
     const fetchMovies = async () => {
       const response = await fetch('/api/movie'); 
@@ -32,6 +34,7 @@ const RatingModal: React.FC<RatingModalProps> = ({ isVisible, onClose , reviewDa
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true); 
     const response = await fetch( reviewData ? `/api/movie/${selectedMovieId}/reviews/${reviewData.id}` : `/api/movie/${selectedMovieId}/reviews`, {
       method: reviewData? 'PUT' : 'POST',
       headers: {
@@ -40,10 +43,11 @@ const RatingModal: React.FC<RatingModalProps> = ({ isVisible, onClose , reviewDa
       body: JSON.stringify({ reviewer, rating, comments }),
     });
 
+    setIsLoading(false); 
+
     if (response.ok) {
       onReview?.(reviewData ? reviewData.movieId : selectedMovieId);
       onClose(); 
-    
     } else {
       console.error('Failed to add rating');
     }
@@ -55,6 +59,11 @@ const RatingModal: React.FC<RatingModalProps> = ({ isVisible, onClose , reviewDa
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white rounded-lg shadow-lg p-6 w-1/3">
         <h2 className="text-2xl font-bold mb-4">Add New Rating</h2>
+        {isLoading && (
+          <div className="flex justify-center mb-4">
+            <div className="loader">Loading...</div> 
+          </div>
+        )}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="movie">
