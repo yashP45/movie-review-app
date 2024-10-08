@@ -21,11 +21,16 @@ export default async function handler(
     });
     res.status(204).end();
   } else if (req.method === 'PUT') {
-    const updatedMovie = await prisma.movie.update({
-      where: { id: Number(id) },
-      data: req.body,
-    });
-    res.status(200).json(updatedMovie);
+    try {
+      const updatedMovie = await prisma.movie.update({
+        where: { id: Number(id) },
+        data: req.body,
+      });
+      res.status(200).json(updatedMovie);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Failed to update movie' });
+    }
   } else {
     res.setHeader('Allow', ['GET', 'PUT', 'DELETE' ]);
     res.status(405).end(`Method ${req.method} Not Allowed`);

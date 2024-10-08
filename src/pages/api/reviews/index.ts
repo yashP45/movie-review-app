@@ -8,6 +8,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     res.status(200).json(reviews);
   } else if (req.method === 'POST') {
     const { movieId, reviewer, rating, comments } = req.body;
+    console.log('New review created:', req.body);
+
     const review = await prisma.review.create({
       data: {
         movieId,
@@ -16,7 +18,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         comments,
       },
     });
-    await updateMovieRating(movieId); 
+   
+    await updateMovieRating(review.movieId); 
     res.status(201).json(review);
   } else {
     res.setHeader('Allow', ['GET', 'POST']);
@@ -24,11 +27,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 }
 async function updateMovieRating(movieId: number) {
+  console.log('Updating movie rating for movieId:', movieId);
   const reviews = await prisma.review.findMany({ where: { movieId } });
-  const averageRating = reviews.length ? reviews.reduce((acc: any, review: any) => acc + review.rating, 0) / reviews.length : null;
+  
+  
+  const averageRating = reviews.length 
+    ? reviews.reduce((acc: any, review: any) => acc + review.rating, 0) / reviews.length 
+    : null;
 
-  await prisma.movie.update({
-    where: { id: movieId },
-    data: { averageRating },
-  });
+  console.log('Calculated average rating:', averageRating);
+  
+  
+  try {
+    await prisma.movie.update({
+      where: { id: movieId },
+      data: { averageRating },
+    });
+    console.log('Movie rating updated successfully');
+  } catch (error) {
+    console.error('Error updating movie rating:', error);
+  }
 }

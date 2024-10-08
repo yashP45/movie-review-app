@@ -25,12 +25,13 @@ const Modal: React.FC<ModalProps> = ({ isVisible, onClose, movie , onSuccess  })
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true); 
+    const formattedReleaseDate = new Date(releaseDate).toISOString();
     const response = await fetch(movie ? `/api/movie/${movie.id}` : '/api/movie/add', { 
       method: movie ? 'PUT' : 'POST', 
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ name, releaseDate }),
+      body: JSON.stringify({ name, releaseDate: formattedReleaseDate }),
     });
 
     setLoading(false); 

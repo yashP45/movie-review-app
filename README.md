@@ -38,6 +38,8 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) in your browser to see the application in action.
 
+
+add DATABASE_URL in your env file (postgres)
 ## Features
 
 - Add new movies with name and release date.
@@ -45,20 +47,8 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to see the a
 - User-friendly modal interface for input.
 - Toast notifications for success and error messages.
 
-## Usage
 
-You can start editing the page by modifying `app/page.tsx`. The modal component can be found in `src/pages/components/Modal.tsx`.
-
-## Learn More
-
-To learn more about Next.js, check out the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs)
-- [Learn Next.js](https://nextjs.org/learn)
-
-## Deployment
-
-For deployment, you can use the [Vercel Platform](https://vercel.com) for easy hosting of your Next.js app. Check out the [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+NOTE* - there might be some bugs which i couldn't verify coz of deadline issue 
 
 ## Contributing
 
