@@ -1,4 +1,11 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  logging: {
+    level: 'verbose'
+  },
+  experimental: {
+    
+  }
+};
 
 export default nextConfig;

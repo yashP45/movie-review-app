@@ -40,7 +40,7 @@ const Modal: React.FC<ModalProps> = ({ isVisible, onClose, movie , onSuccess  })
       onSuccess?.();
       toast.success('Movie saved successfully!'); 
     } else {
-      console.error('Failed to add/edit movie'); 
+   
       toast.error('Failed to add/edit movie');
     }
   };

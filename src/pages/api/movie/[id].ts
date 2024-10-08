@@ -8,6 +8,7 @@ export default async function handler(
   const { id } = req.query;
 
   if (req.method === "GET") {
+    
     const movie = await prisma.movie.findUnique({
       where: { id: Number(id) },
     });
@@ -21,6 +22,8 @@ export default async function handler(
     });
     res.status(204).end();
   } else if (req.method === 'PUT') {
+  
+
     try {
       const updatedMovie = await prisma.movie.update({
         where: { id: Number(id) },
@@ -28,7 +31,7 @@ export default async function handler(
       });
       res.status(200).json(updatedMovie);
     } catch (error) {
-      console.error(error);
+
       res.status(500).json({ error: 'Failed to update movie' });
     }
   } else {

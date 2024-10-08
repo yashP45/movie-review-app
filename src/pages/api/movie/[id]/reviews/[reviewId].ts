@@ -5,6 +5,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const { id, reviewId } = req.query;
 
   if (req.method === 'PUT') {
+    
     const { reviewer, rating, comments } = req.body;
     try {
       const review = await prisma.review.update({

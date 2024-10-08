@@ -1,10 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { prisma } from '../../../server/prisma'; // Adjust the path as necessary
+import { prisma } from '../../../server/prisma'; 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { id } = req.query;
 
   if (req.method === 'GET') {
+
+
     const review = await prisma.review.findUnique({ where: { id: Number(id) } });
     if (review) {
       res.status(200).json(review);
@@ -12,6 +14,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       res.status(404).json({ message: 'Review not found' });
     }
   } else if (req.method === 'PUT') {
+   
+
     const { rating, comments } = req.body;
     const updatedReview = await prisma.review.update({
       where: { id: Number(id) },
@@ -34,6 +38,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 
 async function updateMovieRating(movieId: number) {
+
   const reviews = await prisma.review.findMany({ where: { movieId } });
   const averageRating = reviews.length ? reviews.reduce((acc: any, review: any) => acc + review.rating, 0) / reviews.length : null;
 

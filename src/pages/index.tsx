@@ -37,7 +37,7 @@ const MovieList = () => {
       setMovies(movies.filter((movie: any) => movie.id !== id));
       toast.success("Movie deleted successfully!");
     } else {
-      console.error("Failed to delete movie");
+   
       toast.error("Error Deleting Movie!");
     }
   };

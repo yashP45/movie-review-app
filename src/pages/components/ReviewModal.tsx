@@ -53,7 +53,7 @@ const RatingModal: React.FC<RatingModalProps> = ({ isVisible, onClose , reviewDa
       onClose(); 
     } else {
       toast.error('Failed to add rating'); 
-      console.error('Failed to add rating');
+   
     }
   };
 
